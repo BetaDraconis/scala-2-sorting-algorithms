@@ -1,2 +1,9 @@
-*.class
-*.log
+.*
+
+!.gitignore
+
+.history
+.idea
+project/project
+project/target
+target
