@@ -19,6 +19,8 @@ val appName = "scala-sorting-algorithms"
 lazy val microservice = Project(appName, file("."))
   .settings(
     libraryDependencies ++= AppDependencies.project ++ AppDependencies.test,
-    scalaVersion := "2.13.3"
+    scalaVersion := "2.13.3",
+    Compile / scalaSource := baseDirectory.value / "app",
+    Test / scalaSource := baseDirectory.value / "test"
   )
   .settings(CodeCoverageSettings.settings: _*)
