@@ -21,7 +21,7 @@ import v1.sorts.Sort
 trait SortingSpec extends UnitSpec {
 
   final def sortingSmokeTest(sortingAlgorithm: Sort): Unit = {
-    "a sorting algorithm" when {
+    s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
       "given an empty list" should {
         "return an empty list" in {
           val emptyList: List[BigDecimal] = List.empty[BigDecimal]
@@ -46,3 +46,11 @@ trait SortingSpec extends UnitSpec {
     }
   }
 }
+
+/*
+ List(3, 7, 12, 2.31, 43, 65, 5, 5)
+ List(3, 5, 12, 2.31, 43, 65, 5, 7)
+ List(3, 5, 7, 2.31, 43, 65, 5, 12)
+ List(3, 5, 7, 2.31, 12, 65, 5, 43)
+ List(3, 5, 7, 2.31, 12, 43, 5, 65)
+ */

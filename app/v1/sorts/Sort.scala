@@ -24,4 +24,7 @@ trait Sort {
     case _ :: Nil => list
     case _ => sort(list)
   }
+
+  protected[sorts] def swap(list: Seq[BigDecimal], index1: Int, index2: Int): Seq[BigDecimal] =
+    list.slice(0, index1) ++ Seq(list(index2)) ++list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
 }

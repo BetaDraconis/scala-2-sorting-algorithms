@@ -19,5 +19,6 @@ package v1.sorts
 import support.SortingSpec
 
 class QuickSortSpec extends SortingSpec {
-  sortingSmokeTest(QuickSort)
+  sortingSmokeTest(LomutoQuickSort)
+  sortingSmokeTest(HoareQuickSort)
 }
