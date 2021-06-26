@@ -28,7 +28,4 @@ object BubbleSort extends Sort {
     case (_, _) if list(currIndex) > list(currIndex + 1) => doSort(swap(list, currIndex, currIndex +1), currIndex + 1, runCount +1, maxIndex)
     case (_, _) => doSort(list, currIndex +1, runCount, maxIndex)
   }
-
-  private def swap(list: Seq[BigDecimal], index1: Int, index2: Int): Seq[BigDecimal] =
-    list.slice(0, index1) ++ Seq(list(index2)) ++list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
 }
