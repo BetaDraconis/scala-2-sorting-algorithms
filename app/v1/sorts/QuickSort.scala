@@ -21,7 +21,7 @@ import scala.annotation.tailrec
 object LomutoQuickSort extends Sort {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums)
 
-  // Quick sort using Lomuto partion
+  // Quick sort using Lomuto partition
   private def doSort(nums: Seq[BigDecimal]): Seq[BigDecimal] = nums match {
     case Nil => Nil
     case Nil :+ _ => nums
