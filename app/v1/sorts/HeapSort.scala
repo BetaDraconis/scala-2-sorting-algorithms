@@ -20,18 +20,6 @@ import scala.annotation.tailrec
 
 object HeapSort extends Sort {
   def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
-    @tailrec
-    def doSort(unsortedNums: Seq[BigDecimal], sortedNums: Seq[BigDecimal] = Nil): Seq[BigDecimal] = unsortedNums match {
-      case Nil => sortedNums
-      case num :: Nil => num +: sortedNums
-      case _ =>
-        val heapedUnsortedNums: Seq[BigDecimal] = heapify(unsortedNums)
-        doSort(reHeapify(heapedUnsortedNums), heapedUnsortedNums.head +: sortedNums)
-    }
-
-    def heapify(nums: Seq[BigDecimal], index: Int = 0): Seq[BigDecimal] = {
-      nums
-    }
 
     @tailrec
     def siftDown(nums: Seq[BigDecimal], index: Int): Seq[BigDecimal] = {
@@ -47,15 +35,33 @@ object HeapSort extends Sort {
         case (true, _) =>
           val leftChildNum: BigDecimal = nums(leftChildIndex)
           val rightChildNum: BigDecimal = nums(rightChildIndex)
-          if (leftChildNum > parentNum && leftChildNum > rightChildNum) siftDown(swap(nums, index, leftChildIndex), leftChildIndex)
-          else if (rightChildNum > parentNum && rightChildNum > leftChildNum) siftDown(swap(nums, index, rightChildIndex), rightChildIndex)
+
+          if (leftChildNum > parentNum && leftChildNum >= rightChildNum) siftDown(swap(nums, index, leftChildIndex), leftChildIndex)
+          else if (rightChildNum > parentNum && rightChildNum >= leftChildNum) siftDown(swap(nums, index, rightChildIndex), rightChildIndex)
           else nums
       }
     }
 
-    def reHeapify(nums: Seq[BigDecimal]): Seq[BigDecimal] =
-      siftDown(nums = nums.takeRight(1) ++ nums.tail.dropRight(1), index = 0)
+    @tailrec
+    def heapify(nums: Seq[BigDecimal], index: Int): Seq[BigDecimal] = {
+      if (index == -1) nums
+      else {
+        heapify(siftDown(nums, index), index - 1)
+      }
+    }
 
-    doSort(list)
+    def reHeapify(nums: Seq[BigDecimal]): Seq[BigDecimal] =
+      siftDown(nums = nums.takeRight(1) ++ nums.dropRight(1), index = 0)
+
+    @tailrec
+    def doSort(heapedNums: Seq[BigDecimal], sortedNums: Seq[BigDecimal] = Nil): Seq[BigDecimal] = heapedNums match {
+      case Nil => sortedNums
+      case num :: Nil => num +: sortedNums
+      case _ => doSort(reHeapify(heapedNums.drop(1)), heapedNums.head +: sortedNums)
+    }
+
+    val startNodeIndex = math.floor((list.length - 1) / 2).toInt
+    val heapedNums: Seq[BigDecimal] = heapify(list, startNodeIndex)
+    doSort(heapedNums)
   }
 }
