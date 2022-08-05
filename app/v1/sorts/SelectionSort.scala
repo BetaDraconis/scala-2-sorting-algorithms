@@ -12,9 +12,9 @@ object SelectionSort extends Sort {
       case Nil => sortedNums
       case num :: Nil => sortedNums :+ num
       case head :: tail =>
-        val (lowestNums, remainingNums) = tail.foldLeft((Seq(head), Seq.empty[BigDecimal]))((checkState, nextNum) => {
+        val (lowestNums, remainingNums) = tail.foldLeft((Seq(head), Seq.empty[BigDecimal]))((currState, nextNum) => {
 
-          val (currLowestNums, checkedNums) = checkState
+          val (currLowestNums, checkedNums) = currState
           val currLowestNum: BigDecimal = currLowestNums.head
 
           if (nextNum > currLowestNum) (currLowestNums, checkedNums :+ nextNum)
