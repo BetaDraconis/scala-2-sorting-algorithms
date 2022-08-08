@@ -25,6 +25,8 @@ trait Sort[NumType <: Number] {
     case _ => sort(list)
   }
 
-  protected[sorts] def swap(list: Seq[NumType], index1: Int, index2: Int): Seq[NumType] =
-    list.slice(0, index1) ++ Seq(list(index2)) ++ list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
+  protected[sorts] def swap(list: Seq[NumType], index1: Int, index2: Int): Seq[NumType] = {
+    if (index1 == index2) list
+    else list.slice(0, index1) ++ Seq(list(index2)) ++list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
+  }
 }

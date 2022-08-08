@@ -13,9 +13,28 @@ object ShellSort extends Sort {
 
     @tailrec
     def sortWithGap(nums: Seq[BigDecimal], gap: Int, index: Int = 0): Seq[BigDecimal] = {
-      def doCheck(): Seq[BigDecimal] = ??? // (index, index + gap, index + 2gap ....)
+      val nextIndex = gap + index
 
-      nums.drop(gap + index) match {
+      def doCheck(): Seq[BigDecimal] = {
+        val indexes = List.range[Int](nextIndex, -1, -gap).reverse
+        val numToPlace = nums(nextIndex)
+
+        val placementIndex = indexes.dropRight(1).find(index => numToPlace <= nums(index)).getOrElse(nextIndex)
+
+        if (placementIndex == nextIndex) nums
+        else {
+          val sublistOrder = indexes.map(index =>
+            if (index >= placementIndex && index != nextIndex) (index + gap, nums(index))
+            else if (index == nextIndex) (placementIndex, nums(index))
+            else (index, nums(index))
+          )
+
+          val numsWithOrderedSubList: Seq[BigDecimal] = sublistOrder.foldLeft(nums)((a, b) => a.updated(b._1, b._2))
+          numsWithOrderedSubList
+        }
+       }
+
+      nums.drop(nextIndex) match {
         case Nil => nums
         case _ :: Nil => doCheck()
         case _ => sortWithGap(doCheck(), gap, index + 1)
