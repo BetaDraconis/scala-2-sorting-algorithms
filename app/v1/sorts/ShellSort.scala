@@ -12,15 +12,14 @@ object ShellSort extends Sort {
     }
 
     @tailrec
-    def sortWithGap(nums: Seq[BigDecimal], gap: Int, index: Int = 0): Seq[BigDecimal] =
-      nums.drop(index) match {
-      case Nil => nums
-      case _ :: Nil => nums
-      case _ :: tail if tail.drop(gap - 1).isEmpty => nums
-      case head :: tail =>
-        // TODO: This scenario should also consider subsequent items with the same gap rather than just the first pair.
-        if (head <= tail(gap - 1)) sortWithGap(nums, gap, index + 1)
-        else sortWithGap(swap(nums, index, index + gap), gap, index + 1)
+    def sortWithGap(nums: Seq[BigDecimal], gap: Int, index: Int = 0): Seq[BigDecimal] = {
+      def doCheck(): Seq[BigDecimal] = ??? // (index, index + gap, index + 2gap ....)
+
+      nums.drop(gap + index) match {
+        case Nil => nums
+        case _ :: Nil => doCheck()
+        case _ => sortWithGap(doCheck(), gap, index + 1)
+      }
     }
 
     @tailrec
