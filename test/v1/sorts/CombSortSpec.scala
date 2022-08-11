@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-val appName = "scala-sorting-algorithms"
+package v1.sorts
 
-lazy val microservice = Project(appName, file("."))
-  .settings(
-    libraryDependencies ++= AppDependencies.project ++ AppDependencies.test,
-    scalaVersion := "2.13.3",
-    Compile / scalaSource := baseDirectory.value / "app",
-    Test / scalaSource := baseDirectory.value / "test"
-  )
-  .settings(CodeCoverageSettings.settings: _*)
+import support.SortingSpec
+
+class CombSortSpec extends SortingSpec {
+  sortingSmokeTest(CombSort)
+}
