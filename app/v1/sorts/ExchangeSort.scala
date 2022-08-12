@@ -18,7 +18,7 @@ object ExchangeSort extends Sort {
       nums.drop(index) match {
         case Nil => nums
         case _ :: Nil => nums
-        case aa => doSort(nums.take(index) ++ sortValueAtIndex(aa), index + 1)
+        case numsToSort => doSort(numsToSort.take(index) ++ sortValueAtIndex(numsToSort), index + 1)
       }
     }
 
