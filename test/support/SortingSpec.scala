@@ -20,6 +20,7 @@ import v1.sorts.Sort
 
 trait SortingSpec extends UnitSpec {
 
+  // TODO: Test this with and without filtered sort to catch any potential issues wrt empty sequences being supplied
   final def sortingSmokeTest(sortingAlgorithm: Sort): Unit = {
     s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
       "given an empty list" should {
