@@ -19,7 +19,10 @@ package v1.sorts
 import scala.annotation.tailrec
 
 object BubbleSort extends Sort {
-  protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums, maxIndex = nums.length - 1)
+  protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
+    val listLength = nums.length
+    if (listLength > 0) doSort(nums, maxIndex = nums.length - 1) else nums
+  }
 
   @tailrec
   private def doSort(list: Seq[BigDecimal], currIndex: Int = 0, runCount: Int = 0, maxIndex: Int): Seq[BigDecimal] = (currIndex, runCount) match {
