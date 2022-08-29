@@ -18,7 +18,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object CombSort extends Sort {
+object CombSort extends Sort[BigDecimal] {
   override def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     lazy val shrinkFactor: BigDecimal = 1.3

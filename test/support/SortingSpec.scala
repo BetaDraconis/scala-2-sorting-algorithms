@@ -21,7 +21,8 @@ import v1.sorts.Sort
 trait SortingSpec extends UnitSpec {
 
   // TODO: Test this with and without filtered sort to catch any potential issues wrt empty sequences being supplied
-  final def sortingSmokeTest(sortingAlgorithm: Sort): Unit = {
+  // TODO: Update this to support non BigDecimal types
+  final def sortingSmokeTest(sortingAlgorithm: Sort[BigDecimal]): Unit = {
     s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
       "given an empty list" should {
         "return an empty list" in {

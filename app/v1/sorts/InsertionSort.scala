@@ -18,7 +18,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object InsertionSort extends Sort {
+object InsertionSort extends Sort[BigDecimal] {
   def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums)
 
   @tailrec

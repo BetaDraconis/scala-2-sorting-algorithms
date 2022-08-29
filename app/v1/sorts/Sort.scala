@@ -16,15 +16,15 @@
 
 package v1.sorts
 
-trait Sort {
-  protected[sorts] def sort(list: Seq[BigDecimal]): Seq[BigDecimal]
+trait Sort[NumType <: Number] {
+  protected[sorts] def sort(list: Seq[NumType]): Seq[NumType]
 
-  def filteredSort(list: Seq[BigDecimal]): Seq[BigDecimal] = list match {
+  def filteredSort(list: Seq[NumType]): Seq[NumType] = list match {
     case Nil => Nil
     case _ :: Nil => list
     case _ => sort(list)
   }
 
-  protected[sorts] def swap(list: Seq[BigDecimal], index1: Int, index2: Int): Seq[BigDecimal] =
-    list.slice(0, index1) ++ Seq(list(index2)) ++list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
+  protected[sorts] def swap(list: Seq[NumType], index1: Int, index2: Int): Seq[NumType] =
+    list.slice(0, index1) ++ Seq(list(index2)) ++ list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
 }
