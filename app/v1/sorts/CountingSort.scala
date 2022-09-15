@@ -18,15 +18,12 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object CountingSort extends Sort[BigInt] {
-  def sort(list: Seq[BigInt]): Seq[BigInt] = {
-    val maxNumOpt: Option[BigInt] = list.headOption.map(
-      head => list.tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
-    )
+object CountingSort extends Sort[Integer] {
+  def sort(list: Seq[Integer]): Seq[Integer] = {
 
     @tailrec
-    def doCount(nums: Seq[BigInt], counts: Seq[BigInt]): Seq[BigInt] = {
-      def addToCount(num: BigInt): Seq[BigInt] = counts
+    def doCount(nums: Seq[Integer], counts: Seq[Integer]): Seq[Integer] = {
+      def addToCount(num: Integer): Seq[Integer] = counts.updated(index = num, elem = counts(num) + 1)
 
       nums match {
         case Nil => counts
@@ -35,8 +32,22 @@ object CountingSort extends Sort[BigInt] {
       }
     }
 
-    val counts: Seq[BigInt] = doCount(list, maxNumOpt.fold(list)(maxNum => Seq.fill(maxNum.intValue + 1)(0)))
+    @tailrec
+    def makeCountCumulative(counts: Seq[Integer], index: Integer = 0): Seq[Integer] = counts.drop(index) match {
+      case Nil => counts
+      case _ :: Nil => counts
+      case Seq(head: Integer, nextVal: Integer) => counts.updated(index + 1, head + nextVal)
+      case Seq(head: Integer, nextVal: Integer, _*)  => makeCountCumulative(counts.updated(index + 1, head + nextVal), index + 1)
+    }
 
-    ???
+    list match {
+      case Nil => list
+      case _ :: Nil => list
+      case head :: tail =>
+        val maxNum = tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
+        val counts: Seq[Integer] = doCount(list, Seq.fill(maxNum + 1)(0))
+        val cumulativeCount: Seq[Integer] = makeCountCumulative(counts)
+        ???
+    }
   }
 }

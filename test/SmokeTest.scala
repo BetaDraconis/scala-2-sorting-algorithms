@@ -15,6 +15,7 @@
  */
 
 import support.UnitSpec
+import v1.sorts.CountingSort
 
 class SmokeTest extends UnitSpec {
 
@@ -25,4 +26,6 @@ class SmokeTest extends UnitSpec {
       }
     }
   }
+
+  CountingSort.sort(Seq(1,2,3))
 }
