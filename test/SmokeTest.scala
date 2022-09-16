@@ -25,4 +25,5 @@ class SmokeTest extends UnitSpec {
       }
     }
   }
+
 }

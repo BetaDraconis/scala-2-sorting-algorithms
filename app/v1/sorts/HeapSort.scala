@@ -18,7 +18,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object HeapSort extends Sort {
+object HeapSort extends Sort[BigDecimal] {
   def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec

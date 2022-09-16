@@ -2,7 +2,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object ExchangeSort extends Sort {
+object ExchangeSort extends Sort[BigDecimal] {
   override def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec

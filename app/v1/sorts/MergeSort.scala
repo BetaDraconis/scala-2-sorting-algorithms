@@ -18,7 +18,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object MergeSort extends Sort {
+object MergeSort extends Sort[BigDecimal] {
   override protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums)
 
   def doSort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {

@@ -18,7 +18,7 @@ package v1.sorts
 
 import scala.annotation.tailrec
 
-object BubbleSort extends Sort {
+object BubbleSort extends Sort[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
     val listLength = nums.length
     if (listLength > 0) doSort(nums, maxIndex = nums.length - 1) else nums
