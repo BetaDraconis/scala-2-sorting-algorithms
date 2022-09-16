@@ -22,8 +22,8 @@ object CountingSort extends Sort[Integer] {
   def sort(list: Seq[Integer]): Seq[Integer] = {
 
     @tailrec
-    def doCount(nums: Seq[Integer], counts: Seq[Integer]): Seq[Integer] = {
-      def addToCount(num: Integer): Seq[Integer] = counts.updated(index = num, elem = counts(num) + 1)
+    def doCount(nums: Seq[Integer], counts: List[Integer]): List[Integer] = {
+      def addToCount(num: Integer): List[Integer] = counts.updated(index = num, elem = counts(num) + 1)
 
       nums match {
         case Nil => counts
@@ -32,37 +32,23 @@ object CountingSort extends Sort[Integer] {
       }
     }
 
-    @tailrec
-    def makeCountCumulative(counts: Seq[Integer], index: Integer = 0): Seq[Integer] = counts.drop(index) match {
-      case Nil => counts
-      case _ :: Nil => counts
-      case Seq(head: Integer, nextVal: Integer) => counts.updated(index + 1, head + nextVal)
-      case Seq(head: Integer, nextVal: Integer, _*)  => makeCountCumulative(counts.updated(index = index + 1, elem = head + nextVal), index + 1)
-    }
-
-    @tailrec
-    def placeNums(counts: Seq[Integer], sortedNums: Seq[Integer], index: Integer = 0): Seq[Integer] = {
-
-      list.drop(index) match {
-        case Nil => sortedNums
-        case head :: Nil => sortedNums.updated(index = counts(head) - 1, elem = head)
-        case head :: _ => placeNums(
-          counts = counts.updated(index = head, elem = counts(head) - 1),
-          sortedNums = sortedNums.updated(index = counts(head) - 1, elem = head),
-          index = index + 1
-        )
-      }
-    }
-
     list match {
       case Nil => list
       case _ :: Nil => list
       case head :: tail =>
-        val maxNum = tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
-        val counts: Seq[Integer] = doCount(list, Seq.fill(maxNum + 1)(0))
-        val cumulativeCount: Seq[Integer] = makeCountCumulative(counts)
 
-        placeNums(cumulativeCount, list)
+        val maxNum = tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
+        val counts: List[Integer] = doCount(list, List.fill(maxNum + 1)(0))
+
+        val sortedNums = counts.foldLeft((0, Seq.empty[Integer]))(
+          (state, count) => {
+            lazy val (num, currNums) = state
+            val nextNum = num + 1
+            if (count == 0) (nextNum, currNums) else (nextNum, currNums ++ Seq.fill(count)(num))
+          }
+        )
+
+        sortedNums._2
     }
   }
 
