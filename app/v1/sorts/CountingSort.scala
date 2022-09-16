@@ -37,7 +37,21 @@ object CountingSort extends Sort[Integer] {
       case Nil => counts
       case _ :: Nil => counts
       case Seq(head: Integer, nextVal: Integer) => counts.updated(index + 1, head + nextVal)
-      case Seq(head: Integer, nextVal: Integer, _*)  => makeCountCumulative(counts.updated(index + 1, head + nextVal), index + 1)
+      case Seq(head: Integer, nextVal: Integer, _*)  => makeCountCumulative(counts.updated(index = index + 1, elem = head + nextVal), index + 1)
+    }
+
+    @tailrec
+    def placeNums(counts: Seq[Integer], sortedNums: Seq[Integer], index: Integer = 0): Seq[Integer] = {
+
+      list.drop(index) match {
+        case Nil => sortedNums
+        case head :: Nil => sortedNums.updated(index = counts(head) - 1, elem = head)
+        case head :: _ => placeNums(
+          counts = counts.updated(index = head, elem = counts(head) - 1),
+          sortedNums = sortedNums.updated(index = counts(head) - 1, elem = head),
+          index = index + 1
+        )
+      }
     }
 
     list match {
@@ -47,7 +61,9 @@ object CountingSort extends Sort[Integer] {
         val maxNum = tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
         val counts: Seq[Integer] = doCount(list, Seq.fill(maxNum + 1)(0))
         val cumulativeCount: Seq[Integer] = makeCountCumulative(counts)
-        ???
+
+        placeNums(cumulativeCount, list)
     }
   }
+
 }
