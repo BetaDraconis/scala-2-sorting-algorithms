@@ -47,4 +47,30 @@ trait SortingSpec extends UnitSpec {
       }
     }
   }
+
+  final def sortingSmokeTestInt(sortingAlgorithm: Sort[Integer]): Unit = {
+    s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
+      "given an empty list" should {
+        "return an empty list" in {
+          val emptyList: List[Integer] = List.empty[Integer]
+          sortingAlgorithm.filteredSort(emptyList) shouldBe emptyList
+        }
+      }
+
+      "given a single item list" should {
+        "return a single item list" in {
+          val singleItemList: List[Integer] = List(3)
+          sortingAlgorithm.filteredSort(singleItemList) shouldBe singleItemList
+        }
+      }
+
+      "given a list with many items" should {
+        "return a sorted list" in {
+          val unsortedList: List[Integer] = List(3, 7, 12, 2, 43, 65, 5, 5)
+          val sortedList: List[Integer] = List(2, 3, 5, 5, 7, 12, 43, 65)
+          sortingAlgorithm.filteredSort(unsortedList) shouldBe sortedList
+        }
+      }
+    }
+  }
 }
