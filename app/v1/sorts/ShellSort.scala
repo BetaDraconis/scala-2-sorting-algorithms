@@ -8,44 +8,51 @@ object ShellSort extends Sort {
     @tailrec
     def generateGaps(gaps: Seq[Int] = Nil, i: Int = 1): Seq[Int] = {
       val nextGap = (2 * i) - 1
-      if (list.drop(nextGap).nonEmpty) generateGaps(gaps :+ nextGap, i + 1) else gaps
+      if (list.drop(nextGap).nonEmpty) generateGaps(nextGap +: gaps, i + 1) else gaps
     }
 
     @tailrec
-    def sortWithGap(nums: Seq[BigDecimal], gap: Int, index: Int = 0): Seq[BigDecimal] = {
-      val nextIndex = gap + index
+    def sortWithGap(nums: Seq[BigDecimal], gap: Int, startingIndex: Int = 0): Seq[BigDecimal] = {
+      val nextIndex = startingIndex + gap
 
-      def doCheck(): Seq[BigDecimal] = {
-        val indexes = List.range[Int](nextIndex, -1, -gap).reverse
-        val numToPlace = nums(nextIndex)
+      @tailrec
+      def sortInSubList(nums: Seq[BigDecimal],
+                        lastValidIndex: Int = nextIndex,
+                        subListIndexes: Seq[Int] = Seq(startingIndex, nextIndex)): Seq[BigDecimal] = {
 
-        val placementIndex = indexes.dropRight(1).find(index => numToPlace <= nums(index)).getOrElse(nextIndex)
+        val nextSubListIndex = lastValidIndex + gap
 
-        if (placementIndex == nextIndex) nums
-        else {
-          val sublistOrder = indexes.map(index =>
-            if (index >= placementIndex && index != nextIndex) (index + gap, nums(index))
-            else if (index == nextIndex) (placementIndex, nums(index))
-            else (index, nums(index))
-          )
-
-          val numsWithOrderedSubList: Seq[BigDecimal] = sublistOrder.foldLeft(nums)((a, b) => a.updated(b._1, b._2))
-          numsWithOrderedSubList
+        @tailrec
+        def placeNumInSubList(numToPlace: BigDecimal,
+                              indexes: Seq[Int] = subListIndexes,
+                              nums: Seq[BigDecimal] = nums): Seq[BigDecimal] = indexes match {
+          case Nil => nums
+          case _ :+ last if numToPlace >= nums(last) => nums
+          case allButLast :+ last => placeNumInSubList(numToPlace, allButLast, swap(nums, last, nextSubListIndex))
         }
-       }
 
-      nums.drop(nextIndex) match {
-        case Nil => nums
-        case _ :: Nil => doCheck()
-        case _ => sortWithGap(doCheck(), gap, index + 1)
+        nums.drop(nextSubListIndex) match {
+          case Nil => nums
+          case numToPlace :: Nil => placeNumInSubList(numToPlace)
+          case numToPlace :: _ => sortInSubList(placeNumInSubList(numToPlace), nextSubListIndex, subListIndexes :+ nextSubListIndex)
+        }
+      }
+
+      val ab = gap - 1
+
+      (nums.drop(nextIndex), startingIndex) match {
+        case (Nil, _) => nums
+        case (_ :: Nil, _) => sortInSubList(nums)
+        case (_, `ab`) => sortInSubList(nums)
+        case _ => sortWithGap(sortInSubList(nums), startingIndex + 1)
       }
     }
 
     @tailrec
     def doSort(nums: Seq[BigDecimal], gaps: Seq[Int]): Seq[BigDecimal] = gaps match {
       case Nil => nums
-      case Nil :+ reverseHead => sortWithGap(nums, reverseHead)
-      case reverseTail :+ reverseHead => doSort(sortWithGap(nums, reverseHead), reverseTail)
+      case gap :: Nil => sortWithGap(nums, gap)
+      case gap :: tail => doSort(sortWithGap(nums, gap), tail)
     }
 
     doSort(list, generateGaps())
