@@ -14,30 +14,28 @@ object ShellSort extends Sort {
     @tailrec
     def doSort(nums: Seq[BigDecimal], gaps: Seq[Int]): Seq[BigDecimal] = {
 
-      //@tailrec
-      def sortWithGap(nums: Seq[BigDecimal], gap: Int, startingIndex: Int = 0, currIndex: Int = 0, prevIndexes: Seq[Int] = Nil): Seq[BigDecimal] = {
-        /*
-          I want to do this in one step (rather than multiple nested recursive functions) following the logic:
-            - for each new item in a sublist you can immediately place it rather than storing the index and then
-              sorting it later.
-            - once you hit the end of a sublist you then move onto the next subList at startingIndex += 1 until either
-              no more sublists are possible, or you have created #gap sublists
-            - you never need more than #gap sublists. This is because each sublist will contain 1/gap total possible
-              items, i.e for a gap of two the first sublist will contain all even numbers, and the second all odd numbers.
-         */
+      @tailrec
+      def sortWithGap(nums: Seq[BigDecimal], gap: Int, sublistIndex: Int = 0, currIndex: Int = 0, prevIndexes: Seq[Int] = Nil): Seq[BigDecimal] = {
 
-        val isSortedWithGap: Boolean =
-          startingIndex == gap ||
-          (startingIndex == currIndex && !nums.isDefinedAt(startingIndex + gap))
+        val nextSublistIndex: Int = currIndex + gap
 
-        if (isSortedWithGap) {
+        val isSortedWithGap: Boolean = !nums.isDefinedAt(sublistIndex + gap) || sublistIndex == gap
+        val isEndOfSublist: Boolean = !nums.isDefinedAt(nextSublistIndex)
+
+        if (isSortedWithGap){
           nums
         } else {
-          /*
-            for each starting index increase currIndex by gap until you hit the end of the subList and then increment
-            starting index by 1 until the above Boolean condition indicates that the sort is complete for a gap
-           */
-          nums
+          if (isEndOfSublist) {
+            sortWithGap(nums, gap, sublistIndex + 1, sublistIndex + 1)
+          } else {
+            if (nums(nextSublistIndex) < nums(currIndex)) {
+              val indexesToSwap = prevIndexes.dropWhile(i => nums(i) <= nums(nextSublistIndex)) :+ currIndex
+              val newNums = indexesToSwap.foldRight(nums, nextSublistIndex)((i, state) => (swap(state._1, i, state._2), i))._1
+              sortWithGap(newNums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
+            } else {
+              sortWithGap(nums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
+            }
+          }
         }
       }
 
