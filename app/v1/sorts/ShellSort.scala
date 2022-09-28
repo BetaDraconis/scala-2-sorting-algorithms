@@ -22,20 +22,14 @@ object ShellSort extends Sort {
         val isSortedWithGap: Boolean = !nums.isDefinedAt(sublistIndex + gap) || sublistIndex == gap
         val isEndOfSublist: Boolean = !nums.isDefinedAt(nextSublistIndex)
 
-        if (isSortedWithGap){
-          nums
-        } else {
-          if (isEndOfSublist) {
-            sortWithGap(nums, gap, sublistIndex + 1, sublistIndex + 1)
-          } else {
-            if (nums(nextSublistIndex) < nums(currIndex)) {
-              val indexesToSwap = prevIndexes.dropWhile(i => nums(i) <= nums(nextSublistIndex)) :+ currIndex
-              val newNums = indexesToSwap.foldRight(nums, nextSublistIndex)((i, state) => (swap(state._1, i, state._2), i))._1
-              sortWithGap(newNums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
-            } else {
-              sortWithGap(nums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
-            }
-          }
+        (isSortedWithGap, isEndOfSublist) match {
+          case (true, _) => nums
+          case (_, true) => sortWithGap(nums, gap, sublistIndex + 1, sublistIndex + 1)
+          case (_, _) =>
+            val indexesToSwap = (prevIndexes :+ currIndex).dropWhile(i => nums(i) <= nums(nextSublistIndex))
+            // this fold should probably be a recursive function instead to avoid returning a enum where only half of the data is actually used.
+            val newNums = indexesToSwap.foldRight(nums, nextSublistIndex)((i, state) => (swap(state._1, i, state._2), i))._1
+            sortWithGap(newNums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
         }
       }
 
