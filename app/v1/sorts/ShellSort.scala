@@ -15,20 +15,25 @@ object ShellSort extends Sort {
     def doSort(nums: Seq[BigDecimal], gaps: Seq[Int]): Seq[BigDecimal] = {
 
       @tailrec
-      def sortWithGap(nums: Seq[BigDecimal], gap: Int, sublistIndex: Int = 0, currIndex: Int = 0, prevIndexes: Seq[Int] = Nil): Seq[BigDecimal] = {
+      def placeItem(nums: Seq[BigDecimal], indexToPlace: Int, indexesToSwapWith: Seq[Int]): Seq[BigDecimal] = indexesToSwapWith match {
+        case Nil => nums
+        case Nil :+ last => swap(nums, last, indexToPlace)
+        case rest :+ last => placeItem(swap(nums, last, indexToPlace), last, rest)
+      }
 
+      @tailrec
+      def sortWithGap(nums: Seq[BigDecimal], gap: Int, sublistIndex: Int = 0, currIndex: Int = 0, prevIndexes: Seq[Int] = Nil): Seq[BigDecimal] = {
         val nextSublistIndex: Int = currIndex + gap
 
-        val isSortedWithGap: Boolean = !nums.isDefinedAt(sublistIndex + gap) || sublistIndex == gap
-        val isEndOfSublist: Boolean = !nums.isDefinedAt(nextSublistIndex)
+        val isSortedWithGap: Boolean = nums.drop(sublistIndex + gap).isEmpty || sublistIndex == gap
+        val isEndOfSublist: Boolean = nums.drop(nextSublistIndex).isEmpty
 
         (isSortedWithGap, isEndOfSublist) match {
           case (true, _) => nums
           case (_, true) => sortWithGap(nums, gap, sublistIndex + 1, sublistIndex + 1)
           case (_, _) =>
             val indexesToSwap = (prevIndexes :+ currIndex).dropWhile(i => nums(i) <= nums(nextSublistIndex))
-            // this fold should probably be a recursive function instead to avoid returning a enum where only half of the data is actually used.
-            val newNums = indexesToSwap.foldRight(nums, nextSublistIndex)((i, state) => (swap(state._1, i, state._2), i))._1
+            val newNums = placeItem(nums, nextSublistIndex, indexesToSwap)
             sortWithGap(newNums, gap, sublistIndex, nextSublistIndex, prevIndexes :+ currIndex)
         }
       }
