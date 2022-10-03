@@ -19,5 +19,5 @@ package v1.sorts
 import support.SortingSpec
 
 class RadixSortSpec extends SortingSpec {
-  sortingSmokeTest(RadixSort)
+  sortingSmokeTestInt(RadixSort)
 }
