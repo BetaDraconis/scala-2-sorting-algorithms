@@ -17,16 +17,16 @@
 package v1.sorts
 
 trait Sort[NumType <: Number] {
-  protected[sorts] def sort(list: Seq[NumType]): Seq[NumType]
+  protected[sorts] def sort(nums: Seq[NumType]): Seq[NumType]
 
-  def filteredSort(list: Seq[NumType]): Seq[NumType] = list match {
+  def filteredSort(nums: Seq[NumType]): Seq[NumType] = nums match {
     case Nil => Nil
-    case _ :: Nil => list
-    case _ => sort(list)
+    case _ :: Nil => nums
+    case _ => sort(nums)
   }
 
-  protected[sorts] def swap(list: Seq[NumType], index1: Int, index2: Int): Seq[NumType] = {
-    if (index1 == index2) list
-    else list.slice(0, index1) ++ Seq(list(index2)) ++list.slice(index1 + 1, index2) ++ Seq(list(index1)) ++ list.drop(index2 + 1)
+  protected[sorts] def swap(nums: Seq[NumType], index1: Int, index2: Int): Seq[NumType] = {
+    if (index1 == index2) nums
+    else nums.slice(0, index1) ++ Seq(nums(index2)) ++nums.slice(index1 + 1, index2) ++ Seq(nums(index1)) ++ nums.drop(index2 + 1)
   }
 }

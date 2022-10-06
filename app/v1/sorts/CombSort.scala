@@ -19,10 +19,10 @@ package v1.sorts
 import scala.annotation.tailrec
 
 object CombSort extends Sort[BigDecimal] {
-  override def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
+  override def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     lazy val shrinkFactor: BigDecimal = 1.3
-    val listLength: Int = list.length
+    val listLength: Int = nums.length
 
     @tailrec
     def doSort(nums: Seq[BigDecimal], gap: Int, index: Int = 0, isSorted: Boolean = true): Seq[BigDecimal] = {
@@ -42,6 +42,6 @@ object CombSort extends Sort[BigDecimal] {
       }
     }
 
-    if (listLength <= 1) list else doSort(list, gap = listLength - 1)
+    if (listLength <= 1) nums else doSort(nums, gap = listLength - 1)
   }
 }

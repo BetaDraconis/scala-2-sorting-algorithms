@@ -24,7 +24,7 @@ object BucketSort extends Sort[BigDecimal] {
            - Sort items upon insertion into a bucket rather than the whole bucket at the end
    */
 
-  override protected[sorts] def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
+  override protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec
     def doSort(nums: Seq[BigDecimal], buckets: Seq[Seq[BigDecimal]] = Nil): Seq[BigDecimal] = {
@@ -51,6 +51,6 @@ object BucketSort extends Sort[BigDecimal] {
       }
     }
 
-    doSort(list)
+    doSort(nums)
   }
 }

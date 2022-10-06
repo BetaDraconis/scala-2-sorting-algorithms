@@ -19,7 +19,7 @@ package v1.sorts
 import scala.annotation.tailrec
 
 object HeapSort extends Sort[BigDecimal] {
-  def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
+  def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec
     def siftDown(nums: Seq[BigDecimal], index: Int): Seq[BigDecimal] = {
@@ -60,8 +60,8 @@ object HeapSort extends Sort[BigDecimal] {
       case _ => doSort(reHeapify(heapedNums.drop(1)), heapedNums.head +: sortedNums)
     }
 
-    val startNodeIndex = math.floor((list.length - 1) / 2).toInt
-    val heapedNums: Seq[BigDecimal] = heapify(list, startNodeIndex)
+    val startNodeIndex = math.floor((nums.length - 1) / 2).toInt
+    val heapedNums: Seq[BigDecimal] = heapify(nums, startNodeIndex)
     doSort(heapedNums)
   }
 }
