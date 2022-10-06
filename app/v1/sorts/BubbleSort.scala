@@ -20,15 +20,16 @@ import scala.annotation.tailrec
 
 object BubbleSort extends Sort[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
-    val listLength = nums.length
-    if (listLength > 0) doSort(nums, maxIndex = nums.length - 1) else nums
+
+    @tailrec
+    def doSort(uncheckedNums: Seq[BigDecimal], runHasSwaps: Boolean = false, checkedNums: Seq[BigDecimal] = Nil): Seq[BigDecimal] = uncheckedNums match {
+      case Nil => if (runHasSwaps) doSort(checkedNums) else checkedNums
+      case head :: Nil => if (runHasSwaps) doSort(checkedNums :+ head) else checkedNums :+ head
+      case num1 :: num2 :: tail if num2 < num1 => doSort(num1 +: tail, runHasSwaps = true, checkedNums :+ num2)
+      case num1 :: num2 :: tail => doSort(num2 +: tail, runHasSwaps, checkedNums :+ num1)
+    }
+
+    doSort(nums)
   }
 
-  @tailrec
-  private def doSort(list: Seq[BigDecimal], currIndex: Int = 0, runCount: Int = 0, maxIndex: Int): Seq[BigDecimal] = (currIndex, runCount) match {
-    case (`maxIndex`, 0) => list
-    case (`maxIndex`, _) => doSort(list, maxIndex = maxIndex)
-    case (_, _) if list(currIndex) > list(currIndex + 1) => doSort(swap(list, currIndex, currIndex +1), currIndex + 1, runCount +1, maxIndex)
-    case (_, _) => doSort(list, currIndex +1, runCount, maxIndex)
-  }
 }
