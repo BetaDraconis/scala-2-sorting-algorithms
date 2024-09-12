@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
+import sorts.common.Sort
 import scala.annotation.tailrec
 
 object BubbleSort extends Sort[BigDecimal] {

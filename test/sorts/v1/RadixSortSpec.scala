@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
-class CombSortSpec extends SortingSpec {
-  sortingSmokeTest(CombSort)
+class RadixSortSpec extends SortingSpec {
+  sortingSmokeTestInt(RadixSort)
 }

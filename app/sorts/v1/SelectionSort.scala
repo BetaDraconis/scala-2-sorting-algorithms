@@ -1,9 +1,10 @@
-package v1.sorts
+package sorts.v1
 
+import sorts.common.Sort
 import scala.annotation.tailrec
 
 object SelectionSort extends Sort[BigDecimal] {
-  override protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
+  protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     //TODO: Compare performance of this method vs fold implementation
     @tailrec

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
+
+import sorts.common.Sort
+import Sort.swap
 
 import scala.annotation.tailrec
 

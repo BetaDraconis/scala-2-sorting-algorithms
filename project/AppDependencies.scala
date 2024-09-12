@@ -19,10 +19,10 @@ import sbt._
 object AppDependencies {
 
   val project: Seq[ModuleID] = Seq(
-    "org.typelevel" %% "cats-core" % "2.1.1",
+    "org.typelevel" %% "cats-core" % "2.12.0",
   )
 
   val test: Seq[ModuleID] = Seq(
-    "org.scalatest" %% "scalatest" % "3.2.2" % "test",
+    "org.scalatest" %% "scalatest" % "3.2.19" % "test",
   )
 }

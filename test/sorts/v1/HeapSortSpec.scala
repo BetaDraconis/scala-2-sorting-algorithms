@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
-class BubbleSortSpec extends SortingSpec {
-  sortingSmokeTest(BubbleSort)
+class HeapSortSpec extends SortingSpec {
+  sortingSmokeTest(HeapSort)
 }
