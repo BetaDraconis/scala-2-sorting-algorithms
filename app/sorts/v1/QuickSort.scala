@@ -15,8 +15,7 @@
  */
 package sorts.v1
 
-import sorts.common.Sort
-import Sort.swap
+import sorts.v1.Sort.swap
 
 import scala.annotation.tailrec
 

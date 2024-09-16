@@ -1,6 +1,5 @@
 package sorts.v1
 
-import sorts.common.Sort
 import scala.annotation.tailrec
 
 object SelectionSort extends SortV1[BigDecimal] {

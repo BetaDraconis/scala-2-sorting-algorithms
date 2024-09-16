@@ -1,6 +1,5 @@
 package sorts.v1
 
-import sorts.common.Sort
 import scala.annotation.tailrec
 
 object RadixSort extends SortV1[Integer] {

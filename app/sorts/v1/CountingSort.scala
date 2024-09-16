@@ -16,7 +16,6 @@
 
 package sorts.v1
 
-import sorts.common.Sort
 import scala.annotation.tailrec
 
 object CountingSort extends SortV1[Integer] {
