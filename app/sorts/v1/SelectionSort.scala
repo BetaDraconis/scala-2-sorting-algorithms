@@ -3,7 +3,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object SelectionSort extends Sort[BigDecimal] {
+object SelectionSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     //TODO: Compare performance of this method vs fold implementation

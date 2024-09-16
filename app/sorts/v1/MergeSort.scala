@@ -19,7 +19,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object MergeSort extends Sort[BigDecimal] {
+object MergeSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums)
 
   def doSort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {

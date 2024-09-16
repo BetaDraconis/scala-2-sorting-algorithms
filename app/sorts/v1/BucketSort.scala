@@ -19,7 +19,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object BucketSort extends Sort[BigDecimal] {
+object BucketSort extends SortV1[BigDecimal] {
   /* TODO: Expansion ideas
            - Use a Map instead of a Seq for the buckets and only create populated buckets
            - Sort items upon insertion into a bucket rather than the whole bucket at the end

@@ -5,7 +5,7 @@ import Sort.swap
 
 import scala.annotation.tailrec
 
-object ShellSort extends Sort[BigDecimal] {
+object ShellSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec

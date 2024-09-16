@@ -16,8 +16,6 @@
 
 package sorts.v1
 
-import support.SortingSpec
-
 class InsertionSortSpec extends SortingSpec {
   sortingSmokeTest(InsertionSort)
 }

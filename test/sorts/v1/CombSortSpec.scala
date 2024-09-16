@@ -16,8 +16,6 @@
 
 package sorts.v1
 
-import support.SortingSpec
-
 class CombSortSpec extends SortingSpec {
   sortingSmokeTest(CombSort)
 }

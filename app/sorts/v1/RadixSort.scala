@@ -3,7 +3,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object RadixSort extends Sort[Integer] {
+object RadixSort extends SortV1[Integer] {
   protected[sorts] def sort(nums: Seq[Integer]): Seq[Integer] = {
 
     @tailrec

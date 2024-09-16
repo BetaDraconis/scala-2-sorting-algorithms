@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package support
+package sorts.v1
 
-import sorts.common.Sort
+import support.UnitSpec
 
 trait SortingSpec extends UnitSpec {
 
   // TODO: Test this with and without filtered sort to catch any potential issues wrt empty sequences being supplied
   // TODO: Update this to support non BigDecimal types
-  final def sortingSmokeTest(sortingAlgorithm: Sort[BigDecimal]): Unit = {
+  final def sortingSmokeTest(sortingAlgorithm: SortV1[BigDecimal]): Unit = {
     s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
       "given an empty list" should {
         "return an empty list" in {
@@ -48,7 +48,7 @@ trait SortingSpec extends UnitSpec {
     }
   }
 
-  final def sortingSmokeTestInt(sortingAlgorithm: Sort[Integer]): Unit = {
+  final def sortingSmokeTestInt(sortingAlgorithm: SortV1[Integer]): Unit = {
     s"${sortingAlgorithm.getClass.getSimpleName.dropRight(1)}" when {
       "given an empty list" should {
         "return an empty list" in {

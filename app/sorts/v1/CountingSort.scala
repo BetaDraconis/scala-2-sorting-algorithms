@@ -19,7 +19,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object CountingSort extends Sort[Integer] {
+object CountingSort extends SortV1[Integer] {
   def sort(nums: Seq[Integer]): Seq[Integer] = {
 
     @tailrec

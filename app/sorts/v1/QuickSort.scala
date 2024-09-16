@@ -20,7 +20,7 @@ import Sort.swap
 
 import scala.annotation.tailrec
 
-object LomutoQuickSort extends Sort[BigDecimal] {
+object LomutoQuickSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums)
 
   // Quick sort using Lomuto partition
@@ -34,7 +34,7 @@ object LomutoQuickSort extends Sort[BigDecimal] {
   }
 }
 
-object HoareQuickSort extends Sort[BigDecimal] {
+object HoareQuickSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = doSort(nums, nums.length)
 
   // Hoare partition

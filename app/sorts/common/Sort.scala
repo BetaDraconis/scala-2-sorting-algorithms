@@ -16,19 +16,4 @@
 
 package sorts.common
 
-trait Sort[NumType <: Number] {
-  protected[sorts] def sort(nums: Seq[NumType]): Seq[NumType]
-
-  def filteredSort(nums: Seq[NumType]): Seq[NumType] = nums match {
-    case Nil => Nil
-    case _ :: Nil => nums
-    case _ => sort(nums)
-  }
-}
-
-object Sort {
-  def swap[NumType <: Number](nums: Seq[NumType], index1: Int, index2: Int): Seq[NumType] = {
-    if (index1 == index2) nums
-    else nums.slice(0, index1) ++ Seq(nums(index2)) ++nums.slice(index1 + 1, index2) ++ Seq(nums(index1)) ++ nums.drop(index2 + 1)
-  }
-}
+trait Sort

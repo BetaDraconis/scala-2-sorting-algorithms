@@ -19,7 +19,7 @@ package sorts.v1
 import sorts.common.Sort
 import scala.annotation.tailrec
 
-object BubbleSort extends Sort[BigDecimal] {
+object BubbleSort extends SortV1[BigDecimal] {
   protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec
