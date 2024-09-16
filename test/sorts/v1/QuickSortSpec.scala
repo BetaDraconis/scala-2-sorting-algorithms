@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
-class HeapSortSpec extends SortingSpec {
-  sortingSmokeTest(HeapSort)
+class QuickSortSpec extends SortingSpec {
+  sortingSmokeTest(LomutoQuickSort)
+  sortingSmokeTest(HoareQuickSort)
 }

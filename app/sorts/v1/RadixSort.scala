@@ -1,9 +1,10 @@
-package v1.sorts
+package sorts.v1
 
+import sorts.common.Sort
 import scala.annotation.tailrec
 
 object RadixSort extends Sort[Integer] {
-  override protected[sorts] def sort(list: Seq[Integer]): Seq[Integer] = {
+  protected[sorts] def sort(nums: Seq[Integer]): Seq[Integer] = {
 
     @tailrec
     def doSort(unsortedNums: Seq[Integer], sf: Int = 1, sortedNums: List[Integer] = Nil): Seq[Integer] = unsortedNums match {
@@ -25,6 +26,6 @@ object RadixSort extends Sort[Integer] {
         doSort(newUnsortedNums, sf + 1, newSortedNums)
     }
 
-    doSort(list)
+    doSort(nums)
   }
 }

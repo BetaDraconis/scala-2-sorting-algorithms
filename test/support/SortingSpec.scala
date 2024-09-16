@@ -16,7 +16,7 @@
 
 package support
 
-import v1.sorts.Sort
+import sorts.common.Sort
 
 trait SortingSpec extends UnitSpec {
 

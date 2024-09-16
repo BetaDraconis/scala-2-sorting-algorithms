@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
+import sorts.common.Sort
 import scala.annotation.tailrec
 
 object CountingSort extends Sort[Integer] {
-  def sort(list: Seq[Integer]): Seq[Integer] = {
+  def sort(nums: Seq[Integer]): Seq[Integer] = {
 
     @tailrec
     def doCount(nums: Seq[Integer], counts: List[Integer]): List[Integer] = {
@@ -32,13 +33,13 @@ object CountingSort extends Sort[Integer] {
       }
     }
 
-    list match {
-      case Nil => list
-      case _ :: Nil => list
+    nums match {
+      case Nil => nums
+      case _ :: Nil => nums
       case head :: tail =>
 
         val maxNum = tail.fold(head)((num1, num2) => if (num1 >= num2) num1 else num2)
-        val counts: List[Integer] = doCount(list, List.fill(maxNum + 1)(0))
+        val counts: List[Integer] = doCount(nums, List.fill(maxNum + 1)(0))
 
         val sortedNums = counts.foldLeft((0, Seq.empty[Integer]))(
           (state, count) => {

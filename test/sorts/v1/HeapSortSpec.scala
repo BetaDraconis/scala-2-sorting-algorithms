@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
-class RadixSortSpec extends SortingSpec {
-  sortingSmokeTestInt(RadixSort)
+class HeapSortSpec extends SortingSpec {
+  sortingSmokeTest(HeapSort)
 }

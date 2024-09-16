@@ -1,14 +1,17 @@
-package v1.sorts
+package sorts.v1
+
+import sorts.common.Sort
+import Sort.swap
 
 import scala.annotation.tailrec
 
 object ShellSort extends Sort[BigDecimal] {
-  override protected[sorts] def sort(list: Seq[BigDecimal]): Seq[BigDecimal] = {
+  protected[sorts] def sort(nums: Seq[BigDecimal]): Seq[BigDecimal] = {
 
     @tailrec
     def generateGaps(gaps: Seq[Int] = Nil, i: Int = 1): Seq[Int] = {
       val nextGap = (2 * i) - 1
-      if (list.drop(nextGap).nonEmpty) generateGaps(nextGap +: gaps, i + 1) else gaps
+      if (nums.drop(nextGap).nonEmpty) generateGaps(nextGap +: gaps, i + 1) else gaps
     }
 
     @tailrec
@@ -45,6 +48,6 @@ object ShellSort extends Sort[BigDecimal] {
       }
     }
 
-    doSort(list, generateGaps())
+    doSort(nums, generateGaps())
   }
 }

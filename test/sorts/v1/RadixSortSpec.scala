@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
-class QuickSortSpec extends SortingSpec {
-  sortingSmokeTest(LomutoQuickSort)
-  sortingSmokeTest(HoareQuickSort)
+class RadixSortSpec extends SortingSpec {
+  sortingSmokeTestInt(RadixSort)
 }

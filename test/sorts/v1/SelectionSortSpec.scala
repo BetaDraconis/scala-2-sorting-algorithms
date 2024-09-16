@@ -1,4 +1,4 @@
-package v1.sorts
+package sorts.v1
 
 import support.SortingSpec
 
