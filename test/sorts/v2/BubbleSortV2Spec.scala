@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-import sbt._
+package sorts.v2
 
-object AppDependencies {
-
-  val project: Seq[ModuleID] = Seq(
-    "org.typelevel" %% "cats-core" % "2.12.0",
-  )
-
-  val test: Seq[ModuleID] = Seq(
-    "org.scalatest" %% "scalatest" % "3.2.19" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.18.1" % "test"
-  )
+class BubbleSortV2Spec extends SortingSpec {
+  sortingSmokeTest(BubbleSortV2)
 }

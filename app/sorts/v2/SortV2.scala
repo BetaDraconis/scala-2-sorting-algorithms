@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Luke A Jones
+ * Copyright 2023 Luke A Jones
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import sbt._
+package sorts.v2
 
-object AppDependencies {
+import sorts.common.Sort
 
-  val project: Seq[ModuleID] = Seq(
-    "org.typelevel" %% "cats-core" % "2.12.0",
-  )
+import scala.math.Ordered.orderingToOrdered
 
-  val test: Seq[ModuleID] = Seq(
-    "org.scalatest" %% "scalatest" % "3.2.19" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.18.1" % "test"
-  )
+trait SortV2 extends Sort {
+  def sort[T](nums: Seq[T])(implicit ordering: Ordering[T]): Seq[T]
+}
+
+object SortV2 {
+  def isOrderedPair[T](firstItem: T, secondItem: T)(implicit ordering: Ordering[T]): Boolean = firstItem <= secondItem
 }
