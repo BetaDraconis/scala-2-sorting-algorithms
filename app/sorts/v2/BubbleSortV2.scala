@@ -16,7 +16,7 @@
 
 package sorts.v2
 
-import sorts.v2.SortV2.isOrderedPair
+import sorts.v2.SortV2.{isOrderedPair, prependAndReverseResult, prependMultipleAndReverseResult}
 
 import scala.annotation.tailrec
 
@@ -28,13 +28,13 @@ object BubbleSortV2 extends SortV2 {
   override def sort[T](items: Seq[T])(implicit ordering: Ordering[T]): Seq[T] = {
     @tailrec
     def doSort(unchecked: Seq[T], checked: Seq[T] = Nil, hasSwaps: Boolean = false): Seq[T] = unchecked match {
-      case head :: second :: tail =>
-        if (isOrderedPair(head, second)) doSort(second +: tail, head +: checked, hasSwaps)
-        else doSort(head +: tail, second +: checked, hasSwaps = true)
-      case head :: Nil =>
-        val runResult = (head +: checked).reverse
+      case head :: (tail@second :: secondTail) =>
+        if (isOrderedPair(head, second)) doSort(tail, head +: checked, hasSwaps)
+        else doSort(head +: secondTail, second +: checked, hasSwaps = true)
+      case head :: _ =>
+        val runResult = prependAndReverseResult(head, checked)
         if (hasSwaps) doSort(runResult) else runResult
-      case Nil => Nil
+      case _ => Nil
     }
 
     doSort(items)
