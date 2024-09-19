@@ -11,10 +11,10 @@ object LomutoQuickSortV2 extends QuickSort {
                          upperPartition: Seq[T] = Nil)
                         (implicit ordering: Ordering[T]): (Seq[T], Seq[T]) = items match {
     case head :: (tail@_ :: _) =>
-      if (head <= pivotValue) partitionMethod(tail, pivotValue, head +: lowerPartition, upperPartition)
+      if (head < pivotValue) partitionMethod(tail, pivotValue, head +: lowerPartition, upperPartition)
       else partitionMethod(tail, pivotValue, lowerPartition, head +: upperPartition)
     case head :: Nil =>
-      if (head <= pivotValue) (head +: lowerPartition, upperPartition)
+      if (head < pivotValue) (head +: lowerPartition, upperPartition)
       else (lowerPartition, head +: upperPartition)
     case _ => (lowerPartition, upperPartition)
   }

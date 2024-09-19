@@ -11,7 +11,7 @@ object HoareQuickSortV2 extends QuickSort {
                          upperPartition: Seq[T] = Nil)
                         (implicit ordering: Ordering[T]): (Seq[T], Seq[T]) = items match {
     case head :: (tail@middle :+ last) =>
-      (head <= pivot, last >= pivot) match {
+      (head < pivot, last >= pivot) match {
         case (true, true) => partitionMethod(middle, pivot, head +: lowerPartition, last +: upperPartition)
         case (true, _) => partitionMethod(tail, pivot, head +: lowerPartition, upperPartition)
         case (_, true) => partitionMethod(head +: middle, pivot, lowerPartition, last +: upperPartition)
