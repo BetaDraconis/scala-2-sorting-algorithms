@@ -65,4 +65,11 @@ object SortV2 {
       )
     )
   }
+
+  // This is only defined for non-empty lists of items
+  def lastValuePivot[T]: Seq[T] => (T, Seq[T]) = (items: Seq[T]) => (items.last, items.dropRight(1))
+
+  def pickPivot[T](items: Seq[T], pivotApproach: Seq[T] => (T, Seq[T]) = lastValuePivot[T]): (T, Seq[T]) =
+    pivotApproach(items)
+
 }
