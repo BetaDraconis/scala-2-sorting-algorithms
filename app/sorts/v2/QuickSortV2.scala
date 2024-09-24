@@ -2,7 +2,7 @@ package sorts.v2
 
 import sorts.v2.SortV2.pickPivot
 
-trait QuickSort extends SortV2 {
+trait QuickSortV2 extends SortV2 {
 
   //TODO: Implement option for median of median pivoting to increase efficiency of QuickSort
 

@@ -3,7 +3,7 @@ package sorts.v2
 import scala.annotation.tailrec
 import scala.math.Ordered.orderingToOrdered
 
-object HoareQuickSortV2 extends QuickSort {
+object HoareQuickSortV2 extends QuickSortV2 {
   @tailrec
   def partitionMethod[T](items: Seq[T],
                          pivot: T,
