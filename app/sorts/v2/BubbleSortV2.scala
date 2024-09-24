@@ -16,23 +16,23 @@
 
 package sorts.v2
 
-import sorts.v2.SortV2.{isOrderedPair, prependAndReverseResult, prependMultipleAndReverseResult}
+import sorts.v2.SortV2.{isOrderedPair, prependAndReverseResult}
 
 import scala.annotation.tailrec
 
 object BubbleSortV2 extends SortV2 {
-  /*
-  This implementation utilises tail recursion to iterate through each item in the list to complete a 'run', and also
-  uses tail recursion at the end of each 'run' to start a new one if swaps have been made during it
-   */
   override def sort[T](items: Seq[T])(implicit ordering: Ordering[T]): Seq[T] = {
+
     @tailrec
-    def doSort(unchecked: Seq[T], checked: Seq[T] = Nil, hasSwaps: Boolean = false): Seq[T] = unchecked match {
-      case head :: (tail@second :: secondTail) =>
-        if (isOrderedPair(head, second)) doSort(tail, head +: checked, hasSwaps)
-        else doSort(head +: secondTail, second +: checked, hasSwaps = true)
-      case head :: _ =>
-        val runResult = prependAndReverseResult(head, checked)
+    def doSort(items: Seq[T],
+               checkedItems: Seq[T] = Nil,
+               hasSwaps: Boolean = false)
+              (implicit ordering: Ordering[T]): Seq[T] = items match {
+      case head :: (tail@secondItem :: secondTail) =>
+        if (isOrderedPair(head, secondItem)) doSort(tail, head +: checkedItems, hasSwaps)
+        else doSort(head +: secondTail, secondItem +: checkedItems, hasSwaps = true)
+      case head :: Nil =>
+        val runResult = prependAndReverseResult(head, checkedItems)
         if (hasSwaps) doSort(runResult) else runResult
       case _ => Nil
     }

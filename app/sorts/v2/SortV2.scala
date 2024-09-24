@@ -54,6 +54,12 @@ object SortV2 {
       case Nil => prependAndReverseResult(itemToPlace, checkedSortedItems)
     }
 
+  @tailrec
+  def listLength[T](items: Seq[T], length: Int = 0): Int = items match {
+    case _ :: tail => listLength(tail, length + 1)
+    case _ => length
+  }
+
   def minMaxLength[T](items: Seq[T])(implicit ordering: Ordering[T]): Option[(T, T, Int)] = items match {
     case Nil => None
     case head :: Nil => Some((head, head, 1))
