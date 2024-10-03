@@ -72,10 +72,31 @@ object SortV2 {
     )
   }
 
-  // This is only defined for non-empty lists of items
-  def lastValuePivot[T]: Seq[T] => (T, Seq[T]) = (items: Seq[T]) => (items.last, items.dropRight(1))
-
-  def pickPivot[T](items: Seq[T], pivotApproach: Seq[T] => (T, Seq[T]) = lastValuePivot[T]): (T, Seq[T]) =
-    pivotApproach(items)
-
+  @tailrec
+  def extractMaxItem[T](items: Seq[T],
+                        maxValue: T,
+                        leftItems: Seq[T] = Nil,
+                        rightItems: Seq[T] = Nil,
+                        persistOrder: Boolean = false)
+                       (implicit ordering: Ordering[T]): (Seq[T], T) = items match {
+    case head :: (tail@_ :: _) =>
+      if (isOrderedPair(head, maxValue)) {
+        val newLeftItems = if (persistOrder) leftItems else head +: leftItems
+        val newRightItems = if (persistOrder) head +: rightItems else rightItems
+        extractMaxItem(tail, maxValue, newLeftItems, newRightItems, persistOrder)
+      } else {
+        val newLeftItems = if (persistOrder) rightItems ++ (maxValue +: leftItems) else maxValue +: leftItems
+        extractMaxItem(tail, head, newLeftItems, persistOrder = persistOrder)
+      }
+    case head :: _ =>
+      if (isOrderedPair(head, maxValue)) {
+        val listWithoutMax = if (persistOrder) (rightItems ++ (head +: leftItems)).reverse else head +: leftItems
+        (listWithoutMax, maxValue)
+      }
+      else {
+        val listWithoutMax = if (persistOrder) ((maxValue +: rightItems) ++ leftItems).reverse else maxValue +: leftItems
+        (listWithoutMax, head)
+      }
+    case _ => (items, maxValue)
+  }
 }

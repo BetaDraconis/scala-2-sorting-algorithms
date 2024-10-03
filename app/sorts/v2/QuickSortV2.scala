@@ -1,11 +1,10 @@
 package sorts.v2
 
-import sorts.v2.SortV2.pickPivot
+import sorts.v2.QuickSortV2.pickPivot
 
 trait QuickSortV2 extends SortV2 {
 
   //TODO: Implement option for median of median pivoting to increase efficiency of QuickSort
-
   def partitionMethod[T](items: Seq[T],
                          pivotValue: T,
                          lowerPartition: Seq[T] = Nil,
@@ -24,4 +23,12 @@ trait QuickSortV2 extends SortV2 {
     doSort(items)
   }
 
+}
+
+object QuickSortV2 {
+  // This is only defined for non-empty lists of items
+  def lastValuePivot[T]: Seq[T] => (T, Seq[T]) = (items: Seq[T]) => (items.last, items.dropRight(1))
+
+  def pickPivot[T](items: Seq[T], pivotApproach: Seq[T] => (T, Seq[T]) = lastValuePivot[T]): (T, Seq[T]) =
+    pivotApproach(items)
 }
